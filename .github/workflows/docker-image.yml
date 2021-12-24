@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 8
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+        distribution: 'adopt'
+        cache: maven
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: docker login1
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --build-arg JAR_FILE=target/*.jar --tag gaccount4m/interested-inventory:latest
+
+    - name: Docker Push
+      run: docker push gaccount4m/interested-inventory
