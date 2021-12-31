@@ -35,7 +35,7 @@ public class InterestedInventoryController {
     public ResponseEntity<List<InterestedInventoryPojo>> getAllInterestedInventory(){
         logger.info("calling api");
         List<InterestedInventoryPojo> interestedInventoryPojos=inventoryService.getAllInterestedInventory();
-        return new ResponseEntity<List<InterestedInventoryPojo>>(interestedInventoryPojos,HttpStatus.OK);
+        return new ResponseEntity<>(interestedInventoryPojos, HttpStatus.OK);
     }
 
     public ResponseEntity<List<InterestedInventoryPojo>> hardcodedMessage(Exception e){
