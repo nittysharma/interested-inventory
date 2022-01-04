@@ -42,7 +42,7 @@ public class InterestedInventoryServiceImpl implements  InterestedInventoryServi
     public static InterestedInventoryPojo entityToBean(InterestedInventoryEntity interestedInventoryEntity, Map<String, String> inventoryMap){
         InterestedInventoryPojo interestedInventoryPojo=new InterestedInventoryPojo();
         BeanUtils.copyProperties(interestedInventoryEntity,interestedInventoryPojo);
-        interestedInventoryPojo.setSkuDesc(inventoryMap.get(interestedInventoryEntity.getId()));
+        interestedInventoryPojo.setSkuDesc(inventoryMap.get(interestedInventoryEntity.getSkuId()));
         return interestedInventoryPojo;
     }
 }
