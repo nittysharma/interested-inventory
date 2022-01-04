@@ -28,8 +28,8 @@ public class InterestedInventoryServiceImpl implements  InterestedInventoryServi
     @Override
     public List<InterestedInventoryPojo> getAllInterestedInventory() {
         List<InventoryMasterPojo> inventoryMasterPojos=skuMasterProxy.getInventory();
-        Map<Integer, String> inventoryMap=new HashMap<>();
-        inventoryMasterPojos.forEach(e->inventoryMap.put(e.getId(),e.getSkuDesc()));
+        Map<String, String> inventoryMap=new HashMap<>();
+        inventoryMasterPojos.forEach(e->inventoryMap.put(e.getSkuId(),e.getSkuDesc()));
         List<InterestedInventoryPojo> interestedInventoryPojos=new ArrayList<>();
         interestedInventoryRepo.findAll().forEach(e-> interestedInventoryPojos.add(entityToBean(e,inventoryMap)));
         return interestedInventoryPojos;
@@ -39,7 +39,7 @@ public class InterestedInventoryServiceImpl implements  InterestedInventoryServi
         BeanUtils.copyProperties(interestedInventoryPojo,interestedInventoryEntity);
         return interestedInventoryEntity;
     }
-    public static InterestedInventoryPojo entityToBean(InterestedInventoryEntity interestedInventoryEntity, Map<Integer, String> inventoryMap){
+    public static InterestedInventoryPojo entityToBean(InterestedInventoryEntity interestedInventoryEntity, Map<String, String> inventoryMap){
         InterestedInventoryPojo interestedInventoryPojo=new InterestedInventoryPojo();
         BeanUtils.copyProperties(interestedInventoryEntity,interestedInventoryPojo);
         interestedInventoryPojo.setSkuDesc(inventoryMap.get(interestedInventoryEntity.getId()));
